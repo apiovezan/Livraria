@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+     <h1>Listagem de Generos<a href="{{ path('genero_new') }}" class="btn btn-primary pull-right">Criar novo produto</a></h1> 
+
+    <table class="table -striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nome</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for genero in generos %}
+            <tr>
+                <td><a href="{{ path('genero_show', { 'id': genero.id }) }}">{{ genero.id }}</a></td>
+                <td>{{ genero.nome }}</td>
+                <td>
+                     <a href="{{ path('genero_show', { 'id': genero.id }) }}" class="btn btn-default"><span class="glyphicon glyphicon-eye-open"></span></a>
+                        
+                            <a href="{{ path('genero_edit', { 'id': genero.id }) }}" class="btn btn-warning"><span class="glyphicon glyphicon-pencil"></span></a>
+                            
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('genero_new') }}">Create a new genero</a>
+        </li>
+    </ul>
+{% endblock %}
