@@ -3,7 +3,7 @@
 namespace LivrariaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  *  Description of Produtos
@@ -23,21 +23,31 @@ class Produtos
     
      /**
      * @ORM\Column(type="string", length=100)
+     * @Assert\NotBlank(message="Nao deixe vazio")
      */
     private $nome;
     
     /**
      * @ORM\Column(type="integer", length=8)
+     * @Assert\GreaterThanOrEqual(
+     *     value = 0,
+     *    message="Quantidade deve ser maior ou igual a 0"
+     * )
      */
     private $quantidade;
     
     /**
      * @ORM\Column(type="decimal", scale=2)
+     * @Assert\GreaterThanOrEqual(
+     *     value = 0,
+     *    message="Quantidade deve ser maior ou igual a 0"
+     * )
      */
     private $preco;
     
     /**
      * @ORM\Column(type="string")
+     * @Assert\NotBlank(message="Nao deixe vazio")
      */
     private $tipo;
     
@@ -49,6 +59,7 @@ class Produtos
     /**
      * @ORM\ManyToOne(targetEntity="Genero")
      * @ORM\JoinColumn(name="genero_id", referencedColumnName="id")
+     * @Assert\NotBlank(message="Nao deixe vazio")
      */
     private $genero;
 
