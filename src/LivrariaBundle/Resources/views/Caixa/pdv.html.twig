@@ -3,126 +3,156 @@
 {% block title %}Frente de Loja{% endblock %}
 
 {% block body %}
+
     <div class="row">
         <div class="col-md-4">
+            
             <div class="panel panel-default">
+                
                 <div class="panel-body">
                     
+                    <form id="form-produto" action="{{ path('pesquisar_produto') }}" method="POST">
                     <div class="input-group">
                         <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-ok"></span> 
-                       
-                        </span> 
-                        <input type="text" class="form-control"/>
-                        <span class="input-group-btn">  
                             <span class="glyphicon glyphicon-barcode"></span>
-                        <button type="button" class="btn btn-default">Enviar</button>
-                         </span>   
+                        </span>
+                        <input id="cod-produto" type="text" name="codigo" class="form-control" />
+                        <span class="input-group-btn">
+                            <button type="submit" class="btn btn-success">
+                                <span class="glyphicon glyphicon-ok"></span>
+                            </button>
+                        </span>
                     </div>
+                    </form>
                     
+                    <hr />
                     
-                    <div class="thumbnail">
-                        <img src="http://lorempixel.com/240/240/" width="350" height="350">
+                    <div id="produto-detalhe" class="thumbnail hide">
+                        <img src="http://lorempixel.com/240/240/" width="240" height="240">
                         <div class="caption">
                           <h3>Nome do Produto</h3>
                           <p>Descrição do produto</p>
-                          <p>Preço unitário: R$ 123,56</p>
-                         
+                          <p>Preço Unitário: R$ 123,56</p>
                         </div>
+                  </div>
+                    
+                    
+                    <div id="erro" class="alert alert-danger hide">
+                        Produto não encontrado
                     </div>
-                                        
+                    
                 </div>
-                
+
             </div>
+            
         </div>
         
         <div class="col-md-8">
+           
             <div class="panel panel-info">
                 <div class="panel-heading">
                     Carrinho de Compras
                 </div>
+                
                 <div class="panel-body">
-                    <ol>
-                        <li>Produto nome tal - Quantidade 1 - valor R$ 123.45</li>
-                        <li>Produto nome tal - Quantidade 1 - valor R$ 123.45</li>
-                        <li>Produto nome tal - Quantidade 1 - valor R$ 123.45</li>
+                    <ol id="lista-produtos">
+           
                     </ol>
-                    
                 </div>
                 
                 <div class="panel-footer">
-                    Total a pagar: R$ 0,00
+                    Total a pagar: R$ <span id="valor-total">0,00</span>
                 </div>
             </div>
             
-            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-estorno"> Extornar Venda</button>
-            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-exclui"> Cancelar Venda</button>
-            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-confirma"> Concluir Venda</button>
+            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#modal-estorno">Estornar Item</button>
+            <a href="{{ path('cancelar')}}" type="button" class="btn btn-danger">Cancelar Venda</a>
+            <a href="{{ path('concluir')}}" type="button" class="btn btn-success">Concluir Venda</a>
+            
             
         </div>
     </div>
     
-    <div id="modal-estorno" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-        <div class="modal-dialog modal-sm" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Estorno de Item</h4>
-                </div>
-
-                <div class="modal-body">
-                    <div class="form-group">
-                    <label> Informe o nº do item</label>
-                    <input type="text" class="form-control">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-success">Confirmar</button>
-
-                    </div>
-                </div>
-            </div>
+ <div id="modal-estorno" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" >Estorno de Item</h4>
       </div>
+        
+        <div class="modal-body">
+            <div class="form-group">
+                <label>Informe o número do item:</label>
+                <input id="item-estorno" type="text" class="form-control" />
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button id="bt-confirmar-estorno" type="button" class="btn btn-success">Confirmar</button>
+            </div>
+        </div>
+        
     </div>
+  </div>
+</div>
     
-    <div id="modal-exclui" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-        <div class="modal-dialog modal-sm" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Estorno de Item</h4>
-                </div>
+{% endblock %}
 
-                <div class="modal-body">
-                    <div class="form-group">
-                    <label> Informe o nº do item</label>
-                    <input type="text" class="form-control">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-success">Confirmar</button>
-
-                    </div>
-                </div>
-            </div>
-      </div>
-    </div>
-    
-    <div id="modal-confirma" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-        <div class="modal-dialog modal-sm" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Estorno de Item</h4>
-                </div>
-
-                <div class="modal-body">
-                    <div class="form-group">
-                    <label> Informe o nº do item</label>
-                    <input type="text" class="form-control">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-success">Confirmar</button>
-
-                    </div>
-                </div>
-            </div>
-      </div>
-    </div>
-
+{% block javascripts %}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            
+            listagemProdutos();
+            
+            $('#form-produto').submit(function(evento){
+                evento.preventDefault();
+                
+                var valores = {
+                    "codigo": $('#cod-produto').val()
+                };
+                $.post('{{ path('pesquisar_produto') }}', valores, function(retorno){
+                    
+                    if (retorno.status == 'ok')
+                    {
+                        $('#erro').addClass('hide');
+                        $('#produto-detalhe').removeClass('hide');
+                        
+                        listagemProdutos();
+                    } else {
+                        $('#erro').removeClass('hide');
+                        $('#produto-detalhe').addClass('hide');
+                    }
+                    
+                });
+            });
+            
+            $('#bt-confirmar-estorno').click(function()){
+            
+                var numItem = $('#item-estorno').val();
+                location.href = '/caixa/estorno/'+numItem;
+                
+                
+                     
+        });
+        
+        function listagemProdutos()
+        {
+            $('#lista-produtos').empty();
+            
+            $.getJSON("{{ path('listagem') }}",function(retorno){
+                
+                var total = 0;
+                
+                retorno.forEach(function(el, ind){
+                    var li = $('<li>' + el.codigo + ' - ' + el.descricao + ' - '+ el.valor + '</li>');
+                    $('#lista-produtos').append(li);
+                    
+                    total += parseFloat(el.valor);
+                });
+                
+                $('#valor-total').html(total.toFixed(2));
+                
+            });
+        }
+        
+    </script>
 {% endblock %}

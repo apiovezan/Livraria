@@ -17,7 +17,7 @@ use \LivrariaBundle\Entity\CupomItem;
 class CaixaConttoller  extends Controller
 {
    /**
-    * @Route("/caixa")
+    * @Route("/caixa", name="caixa-index")
     */
     public function pdvAction(Request $request)
    {
@@ -34,21 +34,19 @@ class CaixaConttoller  extends Controller
         $request->getSession()->set("cupom-id", $cupom->getId());
         
         
-                
-        
         return $this->render("LivrariaBundle:Caixa:pdv.html.twig"); 
                 
    }
    
     /**
     * @Route("/caixa/carregar")
-    * @Metthod("POST")
+    * @Method("POST")
     */
    public function carregarProdutoAction(Request $request)
    {
        $em = $this->getDoctrine()->GetManager();
        
-       $codProd = $em = $this->getDoctrine()->GetManager();;
+       $codProd = $em = $this->getDoctrine()->GetManager();
        
        $produto = $em->getRepositoy("LivrariaBundle:Produtos")
                ->find($codProd);
@@ -65,7 +63,7 @@ class CaixaConttoller  extends Controller
        $novoItem->setValorUnitario($produto->getPreco());
        
        $em->persist($cupom);
-        $em->flush();
+       $em->flush();
     
         return $this->json("Ok");
        
@@ -115,11 +113,11 @@ class CaixaConttoller  extends Controller
     $em->persist($cupom);
     $em->flush();
     
-    return $this->json("Ok");
+    return $this->redirectToRoute('caixa-index');
    }
    
     /**
-    * @Route("/caixa/finalizar")
+    * @Route("/caixa/finalizar", name="concluir")
     */
    public function finalizarVendaAction(Request $request)
    {
